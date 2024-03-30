@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather App</title>
+<link rel="stylesheet" href="kot.css">
+</head>
+<body>
+<div class="card">
+<div class="search">
+<input type="text" placeholder="Enter city name" spellcheck="false">
+<button><img src="C:\CLOUD\v.png"></button>	
+</div>
+<div class="error">
+<p>Invalid city name</p>
+</div>
+<div class="weather">
+<img src="C:\CLOUD\rain.jpeg" class="weather-icon">
+<h1 class="temp">22°C</h1>
+<h2 class="city">New York</h2>
+<div class="details">
+<div class="col">
+<img src="C:\CLOUD\hm.jpeg">
+<div>
+<p class="humidity">50%</p>
+<p>Humidity</p>
+</div>
+</div>
+<div class="col">
+<img src="C:\CLOUD\wind.png">
+<div>
+<p class="wind">15 km/h</p>
+<p>Wind speed</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+	const api = "&APPID=b70b8c7ee4ce549fc371c07a3f7b8204";
+	const apiurl = "http://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+	const searchBox = document.querySelector(".search input");
+	const searchBtn = document.querySelector(".search button");
+	const weatherIcon = document.querySelector(".weather-icon");
+
+	async function checkWeather(city) {
+		const response = await fetch(apiurl + city + api);
+		if (response.status == 404) {
+			document.querySelector(".error").style.display = "block";
+			document.querySelector(".weather").style.display = "none";
+		} else {
+			var data = await response.json();	
+			document.querySelector(".city").innerHTML = data.name;
+			document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+			document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+			document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
+			if (data.weather[0].main == "Clouds") {
+				weatherIcon.src = "C:\Users\lenovo\Pictures\Screenshots\Screenshot (4242).png";
+			} 
+			else if (data.weather[0].main == "Rain") {
+				weatherIcon.src = "C:\Users\lenovo\Pictures\Screenshots\Screenshot (4242).png";
+			} 
+			else if (data.weather[0].main == "Clear") {
+				weatherIcon.src = "C:\Users\lenovo\Pictures\Screenshots\Screenshot (4242).png";
+			} 
+			else if (data.weather[0].main == "Drizzle") {
+				weatherIcon.src = "C:\Users\lenovo\Pictures\Screenshots\Screenshot (4242).png";
+			} 
+			else if (data.weather[0].main == "Mist") {
+				weatherIcon.src = "C:\Users\lenovo\Pictures\Screenshots\Screenshot (4242).png";
+			}
+			document.querySelector(".weather").style.display = "block";
+			document.querySelector(".error").style.display = "none";
+		}
+	}
+
+	searchBtn.addEventListener("click", () => {
+		checkWeather(searchBox.value);
+	});
+</script>
+</body>
+</html>
